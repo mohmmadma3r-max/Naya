@@ -5,14 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مفاجأة لـ نايا ✨</title>
     <style>
-        body { background-color: #ffdae9; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
-        .cake-item { position: absolute; top: -100px; width: 40px; z-index: 1; animation: fall linear forwards; pointer-events: none; }
+        body { 
+            background-color: #ffdae9; 
+            font-family: sans-serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden; 
+        }
+        .cake-item { 
+            position: absolute; 
+            top: -100px; 
+            width: 40px; 
+            z-index: 1; 
+            pointer-events: none;
+            animation: fall linear forwards; 
+        }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        .card { background: white; padding: 30px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255,105,180,0.3); text-align: center; border: 6px solid #ff85b3; z-index: 100; width: 280px; }
-        h1 { color: #c2185b; font-size: 1.5rem; }
-        .btn { background-color: #ff54a4; color: white; border: none; padding: 15px 30px; border-radius: 50px; font-size: 18px; cursor: pointer; font-weight: bold; }
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 30px; 
+            box-shadow: 0 10px 30px rgba(255,105,180,0.3); 
+            text-align: center; 
+            border: 6px solid #ff85b3; 
+            z-index: 100; 
+            width: 280px; 
+        }
+        h1 { color: #c2185b; font-size: 1.5rem; margin-bottom: 20px; }
+        .btn { 
+            background-color: #ff54a4; 
+            color: white; 
+            border: none; 
+            padding: 15px 30px; 
+            border-radius: 50px; 
+            font-size: 18px; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
         #countdown { font-size: 5rem; color: #ff1a8c; display: none; font-weight: bold; }
-        #video-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; background: black; }
+        #video-container { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: 999; 
+            background: black; 
+        }
     </style>
 </head>
 <body>
@@ -34,6 +77,57 @@
                 document.getElementById('text').innerText = msgs[count];
                 makeItRain();
                 count++;
+            } else { 
+                startCountdown(); 
+            }
+        }
+
+        function startCountdown() {
+            document.getElementById('main-btn').style.display = 'none';
+            document.getElementById('text').style.display = 'none';
+            const counterEl = document.getElementById('countdown');
+            counterEl.style.display = 'block';
+            let timeLeft = 5;
+            let timer = setInterval(() => {
+                timeLeft--; 
+                counterEl.innerText = timeLeft;
+                if (timeLeft <= 0) { 
+                    clearInterval(timer); 
+                    playVideo(); 
+                }
+            }, 1000);
+        }
+
+        function playVideo() {
+            document.getElementById('main-card').style.display = 'none';
+            const container = document.getElementById('video-container');
+            container.style.display = 'block';
+            // تأكد من تحديث هذا الرابط برابط فيديو يعمل
+            container.innerHTML = `
+                <iframe 
+                    src="https://streamable.com/e/e0xdpk?autoplay=1" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    allow="autoplay; fullscreen" 
+                    style="border:none;">
+                </iframe>`;
+        }
+
+        function makeItRain() {
+            for(let i=0; i<3; i++) {
+                const img = document.createElement('img');
+                img.src = "https://img.icons8.com/emoji/96/birthday-cake-emoji.png";
+                img.className = 'cake-item';
+                img.style.left = Math.random() * 100 + "vw";
+                img.style.animationDuration = "3s";
+                document.body.appendChild(img);
+                setTimeout(() => img.remove(), 3000);
+            }
+        }
+    </script>
+</body>
+</html>
             } else { 
                 startCountdown(); 
             }
